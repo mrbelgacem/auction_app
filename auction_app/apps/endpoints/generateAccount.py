@@ -5,7 +5,7 @@ import json
 from django.conf import settings
 import logging
 
-from auction_app.dto.operations.accounts.generate.account import Account
+from auction_app.dto.operations.accounts.generate.account import Account, ComplexEncoder
 from auction_app.apps.abstractMethods.abstractHttpMethod import AbstractHttpMethod
 from auction_app.tests.resources.utils.auction.setup import Setup
 from auction_app.tests.resources.utils.account.generateNewAccount import GenerateNewAccount
@@ -39,20 +39,14 @@ class generateAccount(AbstractHttpMethod):
             params = client.suggested_params()
             logging.info(f'Check suggested transaction parameters : \n {json.dumps(vars(params), indent=4)}')        
         
-            logger.info('Generating account...')
             acc:Account = GenerateNewAccount.generateForTest(self)
         
         except Exception as err:
-            logging.debug(f"Error : {err=}, {type(err)=}")
+            logging.error(f"Error generating account: {err=}, {type(err)=}")
             raise        
-        logger.info('Account OK...')
+        logger.info('Generating account OK...')
 
-        return JsonResponse({'foncId': acc.getFoncId, 
-                             'name': acc.getName, 
-                             'comment': acc.getComment, 
-                             'publicAddr' : acc.getPublicAddress, 
-                             'privateKey' : acc.getPrivateKey, 
-                             'mnemonic' : acc.getMnemonic})
+        return JsonResponse(acc, encoder=ComplexEncoder, safe=False)
         
 
     
