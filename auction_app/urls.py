@@ -20,5 +20,6 @@ from auction_app.apps.endpoints.generateAccount import generateAccount
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('', include('auction_app.urls')),
-    path('generate/', generateAccount.as_view()),    
+    path('generate/', generateAccount.as_view()), 
+    path('generate/<int:itemId>', generateAccount.as_view()), 
 ]

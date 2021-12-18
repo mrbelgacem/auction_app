@@ -9,6 +9,7 @@ from auction_app.dto.operations.accounts.generate.account import Account, Comple
 from auction_app.apps.abstractMethods.abstractHttpMethod import AbstractHttpMethod
 from auction_app.tests.resources.utils.auction.setup import Setup
 from auction_app.tests.resources.utils.account.generateNewAccount import GenerateNewAccount
+from auction_app.tests.dto.notImplemented import NotImplemented
 
 
 class generateAccount(AbstractHttpMethod):
@@ -37,9 +38,17 @@ class generateAccount(AbstractHttpMethod):
             logging.info(f'Check node status : \n {json.dumps(status, indent=4)}')
 
             params = client.suggested_params()
-            logging.info(f'Check suggested transaction parameters : \n {json.dumps(vars(params), indent=4)}')        
+            logging.info(f'Check suggested transaction parameters : \n {json.dumps(vars(params), indent=4)}')    
+            
+            data = {}
+            if request.body :
+                # if body not empty
+                data = json.loads(request.body.decode("utf-8"))
+            
+            accName = data.get('name') if ('name' in data) else None  
+            accComment = data.get('comment') if ('comment' in data) else None            
         
-            acc:Account = GenerateNewAccount.generateForTest(self)
+            acc:Account = GenerateNewAccount.generateForTest(self, name=accName, comment=accComment)
         
         except Exception as err:
             logging.error(f"Error generating account: {err=}, {type(err)=}")
@@ -49,23 +58,23 @@ class generateAccount(AbstractHttpMethod):
         return JsonResponse(acc, encoder=ComplexEncoder, safe=False)
         
 
-    
-    
     def post(self, request):
-
-        return ({'method':'post not implemented'})
-    
-    
-    def patch(self, request, itemId):
         
-        return ({'method':'patch not implemented'})
-
+        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
     
-    def put(self, request, itemId):
+    
+    def patch(self, request):
         
-        return ({'method':'put not implemented'})
+        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
+
+    def put(self, request):
+        
+        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
+    
+#    def put(self, request, itemId):    
+#        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
     
 
-    def delete(self, request, itemId):
+    def delete(self, request):
         
-        return ({'method':'delete not implemented'})
+        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
