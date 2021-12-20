@@ -1,0 +1,134 @@
+{
+	"info": {
+		"_postman_id": "2f214403-5acd-40f9-99c1-87573e9a2ae8",
+		"name": "auction_app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "generate_with_body_args",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Alice\", \"comment\": \"seller account\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/accounts/generate/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"accounts",
+						"generate",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generate_without_body_args",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/accounts/generate/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"accounts",
+						"generate",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generate_with_url_args",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"itemId\": null}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/generate/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"generate",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generate_with_body_args",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"itemId\": null}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/generate/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"generate",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

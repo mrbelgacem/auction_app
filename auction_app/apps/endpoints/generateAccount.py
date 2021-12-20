@@ -19,7 +19,7 @@ from auction_app.tests.dto.notImplemented import NotImplemented
 
 class accountEndPoint(View):
 
-    @api_view(['POST'])
+    @api_view(['GET', 'POST'])
     def account_generate(request):
         logger = logging.getLogger('auction_app')
         
@@ -48,7 +48,7 @@ class accountEndPoint(View):
             
             infoAccount = {}
             
-            if request.data :
+            if (request.method == 'POST' and request.data):
                 # if body not empty
                 infoAccount = request.data
                 

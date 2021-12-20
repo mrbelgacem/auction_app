@@ -1,2 +1,4 @@
 # ignore all log file
 *.log
+# ignore Python virtual environment ($ python3 -m venv venv)
+venv/
