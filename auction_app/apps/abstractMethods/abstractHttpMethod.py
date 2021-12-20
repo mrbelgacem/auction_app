@@ -3,12 +3,11 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views import View
 from django.http import JsonResponse
-from rest_framework.decorators import api_view
 
 @method_decorator(csrf_exempt, name='dispatch')
 class AbstractHttpMethod(ABC, View):
     
-    @abstractmethod 
+    @abstractmethod
     def get(self, request) -> JsonResponse:
         '''Receive some information'''
         pass
@@ -25,13 +24,7 @@ class AbstractHttpMethod(ABC, View):
         modifies a part of the given resource,
         update a resource if one exists already'''
         pass
-    
-    @abstractmethod
-    def put(self, request) -> JsonResponse:
-        '''Entirely replaces the given resource,
-        if the given resource context does not exist, it will create one'''
-        pass
-    
+
     @abstractmethod
     def put(self, request, itemId) -> JsonResponse:
         '''Entirely replaces the given resource,

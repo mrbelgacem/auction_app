@@ -17,7 +17,7 @@ from auction_app.dto.operations.accounts.generate.account import Account
 
 class GenerateNewAccount:
     
-    def generateForTest(self, **kwargs) -> Account:
+    def generateForTest(**kwargs) -> Account:
         accName = kwargs['name'] if ('name' in kwargs) else None  
         accComment = kwargs['comment'] if ('comment' in kwargs) else None
                 

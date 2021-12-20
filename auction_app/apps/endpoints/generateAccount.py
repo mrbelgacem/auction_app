@@ -1,23 +1,29 @@
 
 from django.http import JsonResponse
-import json
-
 from django.conf import settings
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+import json
 import logging
 
+from django.views.decorators.csrf import csrf_exempt
+from django.views import View
+
 from auction_app.dto.operations.accounts.generate.account import Account, ComplexEncoder
+from auction_app.dto.operations.accounts.generate.serializers import AccountSerializer
 from auction_app.apps.abstractMethods.abstractHttpMethod import AbstractHttpMethod
 from auction_app.tests.resources.utils.auction.setup import Setup
 from auction_app.tests.resources.utils.account.generateNewAccount import GenerateNewAccount
 from auction_app.tests.dto.notImplemented import NotImplemented
 
 
-class generateAccount(AbstractHttpMethod):
-    
-    def get(self, request):
+class accountEndPoint(View):
+
+    @api_view(['POST'])
+    def account_generate(request):
         logger = logging.getLogger('auction_app')
         
-        path = getattr(settings, 'DIR', None)
+        #path = getattr(settings, 'DIR', None)
         
         # Algod parameter
         algodAddress = getattr(settings, 'ALGOD_ADDRESS', None)
@@ -32,7 +38,7 @@ class generateAccount(AbstractHttpMethod):
                 
         try:
             # Create an algod client (only for testing)
-            client = Setup.getAlgodClient(self, ALGOD_TOKEN=algodToken, ALGOD_ADDRESS=algodAddress)
+            client = Setup.getAlgodClient(ALGOD_TOKEN=algodToken, ALGOD_ADDRESS=algodAddress)
             
             status = client.status()
             logging.info(f'Check node status : \n {json.dumps(status, indent=4)}')
@@ -40,41 +46,47 @@ class generateAccount(AbstractHttpMethod):
             params = client.suggested_params()
             logging.info(f'Check suggested transaction parameters : \n {json.dumps(vars(params), indent=4)}')    
             
-            data = {}
-            if request.body :
-                # if body not empty
-                data = json.loads(request.body.decode("utf-8"))
+            infoAccount = {}
             
-            accName = data.get('name') if ('name' in data) else None  
-            accComment = data.get('comment') if ('comment' in data) else None            
+            if request.data :
+                # if body not empty
+                infoAccount = request.data
+                
+            
+            accName = infoAccount.get('name') if ('name' in infoAccount) else None  
+            accComment = infoAccount.get('comment') if ('comment' in infoAccount) else None            
         
-            acc:Account = GenerateNewAccount.generateForTest(self, name=accName, comment=accComment)
+            #acc = Account.objects.get(name=accName)
+            #serializer = AccountSerializer(instance=Account, data=request.data)        
         
+            acc:Account = GenerateNewAccount.generateForTest(name=accName, comment=accComment)
+        
+            serializer = AccountSerializer(acc, many=False)
         except Exception as err:
             logging.error(f"Error generating account: {err=}, {type(err)=}")
-            raise        
+            raise  
+        
         logger.info('Generating account OK...')
-
-        return JsonResponse(acc, encoder=ComplexEncoder, safe=False)
+        return Response(serializer.data)
         
 
-    def post(self, request):
+#    def post(self, request):
         
-        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
+#        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
     
     
-    def patch(self, request):
+#    def patch(self, request):
         
-        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
+#        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
 
-    def put(self, request):
+#    def put(self, request):
         
-        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
+ #       return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
     
 #    def put(self, request, itemId):    
 #        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
     
 
-    def delete(self, request):
+#    def delete(self, request):
         
-        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
+#        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)

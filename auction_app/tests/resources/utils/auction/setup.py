@@ -8,7 +8,7 @@ from auction_app.dto.operations.accounts.generate.account import Account
 
 class Setup():
 
-    def getAlgodClient(self, **kwargs) -> AlgodClient:
+    def getAlgodClient(**kwargs) -> AlgodClient:
         """Connect Your Client"""
         return AlgodClient(kwargs['ALGOD_TOKEN'], kwargs['ALGOD_ADDRESS'])
 

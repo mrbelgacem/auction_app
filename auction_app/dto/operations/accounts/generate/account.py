@@ -3,8 +3,6 @@ import json
 from typing import List
 
 from django.db import models
-from django.core import serializers
-from django.forms.models import model_to_dict
 
 '''Data Transfer Objects'''
 
@@ -56,16 +54,13 @@ class Account(models.Model):
     @classmethod
     def FromMnemonic(cls, m: str) -> "Account":
         return cls(mnemonic.to_private_key(m))
-
-#    @classmethod
-#    def reprJSON(self):
-#        # Serialization
-#        return dict(foncId=self.getFoncId, name=self.getName, comment=self.getComment, publicAddr=self.getPublicAddress, privateKey=self.getPrivateKey, mnemonic=self.getMnemonic) 
-
-#    @classmethod
-#    def toJSON(self):
-#        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
-
+    
+    
+    class Meta:
+        verbose_name_plural = 'accounts'
+    
+    def __str__(self):
+        return self.publicAddress
 
 class ListAccount:
     
@@ -76,25 +71,9 @@ class ListAccount:
     def getAccList(self) -> List[Account]:
         return self.accounts
  
-#    @classmethod
-#    def reprJSON(self): 
-#        # Serialization
-#        return dict(accounts=self.getAccList)
-    
-#    @classmethod
-#    def toJSON(self):
-#        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)    
-
 
 class ComplexEncoder(json.JSONEncoder):
     
     def default(self, o):
-        #return serializers.serialize('json', [ o, ])
-        #return model_to_dict( o )
         return o.__dict__
     
-#    def default(self, obj):
-#        if hasattr(obj,'reprJSON'):
-#            return obj.reprJSON()
-#        else:
-#            return json.JSONEncoder.default(self, obj)
