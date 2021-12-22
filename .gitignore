@@ -2,3 +2,5 @@
 *.log
 # ignore Python virtual environment ($ python3 -m venv venv)
 venv/
+# ignore Python cache
+__pycache__/

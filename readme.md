@@ -1,4 +1,7 @@
 
+## Required :
+Install Docker Engine
+Install Docker Compose
 
 ## Start verify Docker
 $ systemctl start docker
