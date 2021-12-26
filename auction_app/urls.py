@@ -15,11 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from auction_app.apps.endpoints.generateAccount import accountEndPoint
+from auction_app.apps.endpoints.account import accountEndPoint
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/accounts/', include('auction_app.urlDeclarations.account.urls')),
-    #path('account/generate/', accountEndPoint.account_generate, name='generate'), 
-    #path('generate/<int:itemId>', accountEndPoint.as_view()), 
+
 ]

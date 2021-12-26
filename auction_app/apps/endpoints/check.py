@@ -11,16 +11,17 @@ from django.views import View
 
 from auction_app.dto.operations.accounts.generate.account import Account, ComplexEncoder
 from auction_app.dto.operations.accounts.generate.serializers import AccountSerializer
-from auction_app.apps.abstractMethods.abstractHttpMethod import AbstractHttpMethod
+
+from auction_app.apps.operations.checks.balance.checkBalance import CheckBalance
+
 from auction_app.tests.resources.utils.auction.setup import Setup
-from auction_app.tests.resources.utils.account.generateNewAccount import GenerateNewAccount
 from auction_app.tests.dto.notImplemented import NotImplemented
 
 
-class accountEndPoint(View):
+class checkEndPoint(View):
 
     @api_view(['GET', 'POST'])
-    def account_generate(request):
+    def account_check(request):
         logger = logging.getLogger('auction_app')
         
         #path = getattr(settings, 'DIR', None)
@@ -33,8 +34,8 @@ class accountEndPoint(View):
         kmdAddress = getattr(settings, 'KMD_ADDRESS', None)
         kmdWalletName = getattr(settings, 'KMD_WALLET_NAME', None)
         kmdWalletPassword = getattr(settings, 'KMD_WALLET_PASSWORD', None)  
-               
-        acc:Account = None
+
+        balance = None
                 
         try:
             # Create an algod client (only for testing)
@@ -47,46 +48,23 @@ class accountEndPoint(View):
             logging.info(f'Check suggested transaction parameters : \n {json.dumps(vars(params), indent=4)}')    
             
             infoAccount = {}
+            pubKey = None
             
             if (request.method == 'POST' and request.data):
                 # if body not empty
                 infoAccount = request.data
-                
-            
-            accName = infoAccount.get('name') if ('name' in infoAccount) else None  
-            accComment = infoAccount.get('comment') if ('comment' in infoAccount) else None            
+            else :
+                pubKey=request.GET.get('publicAddress')
+                          
+            accPubKey = infoAccount.get('publicAddress') if ('publicAddress' in infoAccount) else pubKey             
+           
+            balance = CheckBalance.checkBalance(client, accPubKey=accPubKey)
         
-            #acc = Account.objects.get(name=accName)
-            #serializer = AccountSerializer(instance=Account, data=request.data)        
-        
-            acc:Account = GenerateNewAccount.generateForTest(name=accName, comment=accComment)
-        
-            serializer = AccountSerializer(acc, many=False)
         except Exception as err:
             logging.error(f"Error generating account: {err=}, {type(err)=}")
             raise  
         
-        logger.info('Generating account OK...')
-        return Response(serializer.data)
+        logger.info(f'Balance check account OK... {type(balance)}')
         
-
-#    def post(self, request):
-        
-#        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
-    
-    
-#    def patch(self, request):
-        
-#        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
-
-#    def put(self, request):
-        
- #       return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
-    
-#    def put(self, request, itemId):    
-#        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
-    
-
-#    def delete(self, request):
-        
-#        return JsonResponse(NotImplemented('Method not implemented'), encoder=ComplexEncoder, safe=False)
+        return Response(balance)
+ 

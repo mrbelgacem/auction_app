@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2f214403-5acd-40f9-99c1-87573e9a2ae8",
+		"_postman_id": "2693a9be-6c98-451b-bb89-14bfe74c6286",
 		"name": "auction_app",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -40,7 +40,7 @@
 			"response": []
 		},
 		{
-			"name": "generate_without_body_args",
+			"name": "generate_with_header_args",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -57,7 +57,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/accounts/generate/",
+					"raw": "http://127.0.0.1:8000/api/accounts/generate/?name=Alice&comment=test account",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -71,22 +71,40 @@
 						"accounts",
 						"generate",
 						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Alice"
+						},
+						{
+							"key": "comment",
+							"value": "test account"
+						}
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "generate_with_url_args",
+			"name": "check_with_header_args",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "PUT",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"itemId\": null}"
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/generate/1",
+					"raw": "http://127.0.0.1:8000/api/accounts/check/?publicAddress=T6PB53WBJBVZAJBNL2JVPJDIEGI5EEHA5Z6345WQJRJ4MEB4HW6XASE4LA",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -96,24 +114,37 @@
 					],
 					"port": "8000",
 					"path": [
-						"generate",
-						"1"
+						"api",
+						"accounts",
+						"check",
+						""
+					],
+					"query": [
+						{
+							"key": "publicAddress",
+							"value": "T6PB53WBJBVZAJBNL2JVPJDIEGI5EEHA5Z6345WQJRJ4MEB4HW6XASE4LA"
+						}
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "generate_with_body_args",
+			"name": "check_with_body_args",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"itemId\": null}"
+					"raw": "{\"publicAddress\": \"TVMZNO2WUFSJK3EVQV3CTOPE2FVYWEDUOQRBH7U2666E374BQTKVRLHIIA\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/generate/1",
+					"raw": "http://127.0.0.1:8000/api/accounts/check/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -123,8 +154,17 @@
 					],
 					"port": "8000",
 					"path": [
-						"generate",
-						"1"
+						"api",
+						"accounts",
+						"check",
+						""
+					],
+					"query": [
+						{
+							"key": "publicAddress",
+							"value": "T6PB53WBJBVZAJBNL2JVPJDIEGI5EEHA5Z6345WQJRJ4MEB4HW6XASE4LA",
+							"disabled": true
+						}
 					]
 				}
 			},
