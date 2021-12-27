@@ -2,6 +2,7 @@
 
 import json
 import logging
+from algosdk.error import AlgodHTTPError
 
 
 class CheckBalance:
@@ -10,13 +11,16 @@ class CheckBalance:
         
         logger = logging.getLogger('auction_app')
         
-        #logger.info(f"Check balance account public key : {kwargs['accPubKey']}")
-        
-#        for pk in my_list:
-#            print(pk)
-        account_info = None
-        if kwargs['accPubKey'] :
-            account_info = client.account_info(kwargs['accPubKey'])
-            #logging.debug(f"Account info \n {json.dumps(account_info, indent=4)}")
+        account_info_list = {'accountInfo' : [], 'errors' : []}
+        for pk in kwargs['accPubKey']:   
+            if pk :
+                try:
+                    account_info_list['accountInfo'].append(client.account_info(pk))
+                except AlgodHTTPError as err:
+                    pkError = {'address' : pk, 'error' : err.args}
+                    account_info_list['errors'].append(pkError)
+                    #account_info_list['errors'].append(json.dumps(pkError))
+                    logger.error(json.dumps(pkError, indent=4))
+                    pass                
             
-        return account_info
+        return account_info_list

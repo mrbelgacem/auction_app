@@ -7,5 +7,6 @@ urlpatterns = [
     path('generate/', accountEndPoint.account_generate, name='generate test account - POST'),
     path('generate/<str:name>&<str:comment>/', accountEndPoint.account_generate, name='generate test account - GET'),
     path('check/', checkEndPoint.account_check, name='check account balance by public key - POST'),
-    path('check/<str:publicAddress>/', checkEndPoint.account_check, name='check account balance by public key - GET'),
+    path('check/<publicAddress>/', checkEndPoint.account_check, name='check account balance by public key - GET'),
+    ##path('check/<list:publicAddress>/', checkEndPoint.account_check, name='check account balance by public key - GET'),
 ]

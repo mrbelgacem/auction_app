@@ -38,26 +38,32 @@ class checkEndPoint(View):
         balance = None
         
         infoAccount = {}
-        pubKey = None        
+        pubKeyList = None        
                 
         try:
             # Create an algod client (only for testing)
             client = Setup.getAlgodClient(ALGOD_TOKEN=algodToken, ALGOD_ADDRESS=algodAddress)
             
-            status = client.status()
+            #status = client.status()
             #logger.info(f'Check node status : \n {json.dumps(status, indent=4)}')
 
-            params = client.suggested_params()
+            #params = client.suggested_params()
             #logger.info(f'Check suggested transaction parameters : \n {json.dumps(vars(params), indent=4)}')    
             
             if (request.method == 'POST' and request.data):
                 # if body not empty
                 infoAccount = request.data
             else :
+                logger.info(f'Type of param ... {type(request.GET.get("publicAddress"))}')
                 # request.query_params.get('publicAddress', None)
-                pubKey = request.GET.get('publicAddress')
-                          
-            accPubKey = infoAccount.get('publicAddress') if ('publicAddress' in infoAccount) else pubKey             
+                if isinstance(request.GET.get('publicAddress'), list):
+                    # Checking if param has type list
+                    pubKeyList = request.GET.get('publicAddress')
+                else :
+                    # param has type string
+                    pubKeyList = [request.GET.get('publicAddress')]
+                                       
+            accPubKey = infoAccount.get('publicAddress') if ('publicAddress' in infoAccount) else pubKeyList           
            
             balance = CheckBalance.checkBalance(client, accPubKey=accPubKey)
         
