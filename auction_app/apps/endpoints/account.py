@@ -44,10 +44,10 @@ class accountEndPoint(View):
             client = Setup.getAlgodClient(ALGOD_TOKEN=algodToken, ALGOD_ADDRESS=algodAddress)
             
             status = client.status()
-            logging.info(f'Check node status : \n {json.dumps(status, indent=4)}')
+            #logger.info(f'Check node status : \n {json.dumps(status, indent=4)}')
 
             params = client.suggested_params()
-            logging.info(f'Check suggested transaction parameters : \n {json.dumps(vars(params), indent=4)}')    
+            #logger.info(f'Check suggested transaction parameters : \n {json.dumps(vars(params), indent=4)}')    
             
             infoAccount = {}
             
@@ -68,7 +68,7 @@ class accountEndPoint(View):
         
             serializer = AccountSerializer(acc, many=False)
         except Exception as err:
-            logging.error(f"Error generating account: {err=}, {type(err)=}")
+            logger.error(f"Error generating account: {err=}, {type(err)=}")
             raise  
         
         logger.info('Generating account OK...')

@@ -10,7 +10,7 @@ class CheckBalance:
         
         logger = logging.getLogger('auction_app')
         
-        logger.info(f"Check balance account public key : {kwargs['accPubKey']}")
+        #logger.info(f"Check balance account public key : {kwargs['accPubKey']}")
         
 #        for pk in my_list:
 #            print(pk)

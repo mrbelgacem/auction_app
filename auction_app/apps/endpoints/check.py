@@ -36,32 +36,33 @@ class checkEndPoint(View):
         kmdWalletPassword = getattr(settings, 'KMD_WALLET_PASSWORD', None)  
 
         balance = None
+        
+        infoAccount = {}
+        pubKey = None        
                 
         try:
             # Create an algod client (only for testing)
             client = Setup.getAlgodClient(ALGOD_TOKEN=algodToken, ALGOD_ADDRESS=algodAddress)
             
             status = client.status()
-            logging.info(f'Check node status : \n {json.dumps(status, indent=4)}')
+            #logger.info(f'Check node status : \n {json.dumps(status, indent=4)}')
 
             params = client.suggested_params()
-            logging.info(f'Check suggested transaction parameters : \n {json.dumps(vars(params), indent=4)}')    
-            
-            infoAccount = {}
-            pubKey = None
+            #logger.info(f'Check suggested transaction parameters : \n {json.dumps(vars(params), indent=4)}')    
             
             if (request.method == 'POST' and request.data):
                 # if body not empty
                 infoAccount = request.data
             else :
-                pubKey=request.GET.get('publicAddress')
+                # request.query_params.get('publicAddress', None)
+                pubKey = request.GET.get('publicAddress')
                           
             accPubKey = infoAccount.get('publicAddress') if ('publicAddress' in infoAccount) else pubKey             
            
             balance = CheckBalance.checkBalance(client, accPubKey=accPubKey)
         
         except Exception as err:
-            logging.error(f"Error generating account: {err=}, {type(err)=}")
+            logger.error(f"Error generating account: {err=}, {type(err)=}")
             raise  
         
         logger.info(f'Balance check account OK... {type(balance)}')
