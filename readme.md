@@ -2,6 +2,9 @@
 ## Install all required Docker components :
 Install Docker Engine (client-server application) and Docker Compose (tool for defining and running multi-container Docker applications).
 
+## Clone Sandbox
+Clone the repository, which can be found here: https://github.com/algorand/sandbox
+
 ## Install all dependencies in a python project :
 $ pip3 install -r requirements.txt
 
@@ -14,9 +17,10 @@ $ docker run hello-world
 $ docker container ls
 
 	
-## Start the Algorand sandbox with the testnet configuration :
+## Start the Algorand sandbox with the testnet configuration : ./sandbox up [mainnet||testnet||betanet] [-v] [-s]
 	
-$ ./sandbox up -v testnet
+$ ./sandbox up testnet -v 
+$ ./sandbox up testnet -v -s    (To skip the snapshot initialization and begin downloading the blockchain from the first round)
 $ ./sandbox logs
 $ ./sandbox status  ( same as : $ ./sandbox goal node status )
 

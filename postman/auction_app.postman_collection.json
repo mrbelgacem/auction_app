@@ -136,7 +136,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"publicAddress\": \"TVMZNO2WUFSJK3EVQV3CTOPE2FVYWEDUOQRBH7U2666E374BQTKVRLHIIA\"}",
+					"raw": "{\"publicAddress\": [\"TVMZNO2WUFSJK3EVQV3CTOPE2FVYWEDUOQRBH7U2666E374BQTKVRLHIIA\", \"T6PB53WBJBVZAJBNL2JVPJDIEGI5EEHA5Z6345WQJRJ4MEB4HW6XASE4LA\", \"L3MRLN2VF6IE2PJBJABMQOZOSLARIEI4WMZ6CUBRLYIWF4SRULL4XABHKE\", \"JZ7RKLFHXIDOVXC6AZQBAPPOXA73GEEQ5WEIQ3HO7LPJGPQGROCDUC452A\", \"LY3VOESETUNOLCWJU37QG5UDXEWL64ULLYUHMTCLKWOJQJB2KW44KR3P7E\", \"JWMSZNIKYSJDZXN6DYGDEWT542MNY433FKASROAMR24FF33MW7UW5HO6UE\", \"XXXXX2WUFSJK3EVQV3CTOPE2FVYWEDUOQRBH7U2666E37XXXXXXXXXX\"]}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -157,6 +157,47 @@
 						"api",
 						"accounts",
 						"check",
+						""
+					],
+					"query": [
+						{
+							"key": "publicAddress",
+							"value": "T6PB53WBJBVZAJBNL2JVPJDIEGI5EEHA5Z6345WQJRJ4MEB4HW6XASE4LA",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "asset_with_body_args",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"publicAddress\": \"T6PB53WBJBVZAJBNL2JVPJDIEGI5EEHA5Z6345WQJRJ4MEB4HW6XASE4LA\",\n    \"secretKey\": \"gs6mLp90VOaqkKFl+CI2hPAuqVew67csJwbA18V5ATifnh7uwUhrkCQtXpNXpGghkdIQ4O59vnbQTFPGEDw9vQ==\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/accounts/asset/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"accounts",
+						"asset",
 						""
 					],
 					"query": [

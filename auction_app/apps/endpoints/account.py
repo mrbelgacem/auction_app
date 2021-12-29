@@ -41,12 +41,12 @@ class accountEndPoint(View):
                 
         try:
             # Create an algod client (only for testing)
-            client = Setup.getAlgodClient(ALGOD_TOKEN=algodToken, ALGOD_ADDRESS=algodAddress)
+            algodClient = Setup.getAlgodClient(ALGOD_TOKEN=algodToken, ALGOD_ADDRESS=algodAddress)
             
-            status = client.status()
+            status = algodClient.status()
             #logger.info(f'Check node status : \n {json.dumps(status, indent=4)}')
 
-            params = client.suggested_params()
+            params = algodClient.suggested_params()
             #logger.info(f'Check suggested transaction parameters : \n {json.dumps(vars(params), indent=4)}')    
             
             infoAccount = {}

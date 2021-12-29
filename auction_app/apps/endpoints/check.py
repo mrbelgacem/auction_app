@@ -1,5 +1,4 @@
 
-from django.http import JsonResponse
 from django.conf import settings
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -42,7 +41,7 @@ class checkEndPoint(View):
                 
         try:
             # Create an algod client (only for testing)
-            client = Setup.getAlgodClient(ALGOD_TOKEN=algodToken, ALGOD_ADDRESS=algodAddress)
+            algodClient = Setup.getAlgodClient(ALGOD_TOKEN=algodToken, ALGOD_ADDRESS=algodAddress)
             
             #status = client.status()
             #logger.info(f'Check node status : \n {json.dumps(status, indent=4)}')
@@ -65,13 +64,13 @@ class checkEndPoint(View):
                                        
             accPubKey = infoAccount.get('publicAddress') if ('publicAddress' in infoAccount) else pubKeyList           
            
-            balance = CheckBalance.checkBalance(client, accPubKey=accPubKey)
+            balance = CheckBalance.checkBalance(algodClient, accPubKey=accPubKey)
         
         except Exception as err:
             logger.error(f"Error generating account: {err=}, {type(err)=}")
             raise  
         
-        logger.info(f'Balance check account OK... {type(balance)}')
+        logger.debug(f'Balance check account OK... {type(balance)}')
         
         return Response(balance)
  

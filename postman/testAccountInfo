@@ -5,7 +5,7 @@
             "name": "Alice",
             "comment": "Alice (seller account)",
             "publicAddress": "T6PB53WBJBVZAJBNL2JVPJDIEGI5EEHA5Z6345WQJRJ4MEB4HW6XASE4LA",
-            "privateKey": "gs6mLp90VOaqkKFl+CI2hPAuqVew67csJwbA18V5ATifnh7uwUhrkCQtXpNXpGghkdIQ4O59vnbQTFPGEDw9vQ==",
+            "secretKey": "gs6mLp90VOaqkKFl+CI2hPAuqVew67csJwbA18V5ATifnh7uwUhrkCQtXpNXpGghkdIQ4O59vnbQTFPGEDw9vQ==",
             "mnemonic": "space open nuclear enemy pottery ridge luxury pave arrow message brand analyst fuel tumble live two notice original adapt lab merry fury scale ability average"
         },
         {
@@ -13,7 +13,7 @@
             "name": "Bob",
             "comment": "Bob (creator account)",
             "publicAddress": "L3MRLN2VF6IE2PJBJABMQOZOSLARIEI4WMZ6CUBRLYIWF4SRULL4XABHKE",
-            "privateKey": "kdo8aCMip2EslEVMaEgfqXel9Q54P0Se6kvLz37vjpxe2RW3VS+QTT0hSALIOy6SwRQRHLMz4VAxXhFi8lGi1w==",
+            "secretKey": "kdo8aCMip2EslEVMaEgfqXel9Q54P0Se6kvLz37vjpxe2RW3VS+QTT0hSALIOy6SwRQRHLMz4VAxXhFi8lGi1w==",
             "mnemonic": "fall vibrant reduce captain exact blur pause easily another canvas moral kind enough runway scatter disorder silk price planet witness work rookie tongue above pizza"
         },
         {
@@ -21,7 +21,7 @@
             "name": "Carla",
             "comment": "Carla (bidder1 account)",
             "publicAddress": "JZ7RKLFHXIDOVXC6AZQBAPPOXA73GEEQ5WEIQ3HO7LPJGPQGROCDUC452A",
-            "privateKey": "60e1Bj0HFN1jKwWgFbckmg0y1jVM1EA2XHexBmISxD1OfxUsp7oG6txeBmAQPe64P7MQkO2IiGzu+t6TPgaLhA==",
+            "secretKey": "60e1Bj0HFN1jKwWgFbckmg0y1jVM1EA2XHexBmISxD1OfxUsp7oG6txeBmAQPe64P7MQkO2IiGzu+t6TPgaLhA==",
             "mnemonic": "word steak local inherit chimney warrior force ahead reduce sword banner super goat intact giant stairs siege ignore roof help series afraid until ability person"
         },
         {
@@ -29,7 +29,7 @@
             "name": "Dilane",
             "comment": "Dilane (bidder2 account)",
             "publicAddress": "LY3VOESETUNOLCWJU37QG5UDXEWL64ULLYUHMTCLKWOJQJB2KW44KR3P7E",
-            "privateKey": "ATbS1CxD97Gr4hLVh+k8TQ3W2rwoO8ABm08hwYpZPyBeN1cSRJ0a5YrJpv8DdoO5LL9yi14odkxLVZyYJDpVuQ==",
+            "secretKey": "ATbS1CxD97Gr4hLVh+k8TQ3W2rwoO8ABm08hwYpZPyBeN1cSRJ0a5YrJpv8DdoO5LL9yi14odkxLVZyYJDpVuQ==",
             "mnemonic": "scan emotion heavy crazy update unaware best base wide plastic oyster state project cute echo depth day hire pond bamboo better stool acid ability purse"
         },
         {
@@ -37,7 +37,7 @@
             "name": "Eloan",
             "comment": "Eloan (bidder3 account)",
             "publicAddress": "JWMSZNIKYSJDZXN6DYGDEWT542MNY433FKASROAMR24FF33MW7UW5HO6UE",
-            "privateKey": "02z3a1lVwy0W64DnzSvuOc0XTlF6Oh5+a6DmBcbjF+tNmSy1CsSSPN2+HgwyWn3mmNxzeyqBKLgMjrhS72y36Q==",
+            "secretKey": "02z3a1lVwy0W64DnzSvuOc0XTlF6Oh5+a6DmBcbjF+tNmSy1CsSSPN2+HgwyWn3mmNxzeyqBKLgMjrhS72y36Q==",
             "mnemonic": "omit tank remove few mammal merge flavor liberty rude quality warfare squeeze convince fatal spoon denial sense pupil expand fury metal wedding flavor abstract brief"
         }
     ]

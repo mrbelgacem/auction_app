@@ -14,17 +14,17 @@ class Account(models.Model):
     name = models.CharField(max_length=200)
     comment = models.CharField(max_length=400)
     publicAddress = models.CharField(max_length=400)
-    privateKey = models.CharField(max_length=400)
+    secretKey = models.CharField(max_length=400)
     mnemonic = models.CharField(max_length=400) 
     
     
-    def __init__(self, privateKey: str, **kwargs) -> None:
+    def __init__(self, secretKey: str, **kwargs) -> None:
         self.foncId = kwargs['foncId'] if ('foncId' in kwargs) else None
         self.name = kwargs['name'] if ('name' in kwargs) else None  
         self.comment = kwargs['comment'] if ('comment' in kwargs) else None
-        self.publicAddress = account.address_from_private_key(privateKey)
-        self.privateKey = privateKey
-        self.mnemonic = mnemonic.from_private_key(self.privateKey)
+        self.publicAddress = account.address_from_private_key(secretKey)
+        self.secretKey = secretKey
+        self.mnemonic = mnemonic.from_private_key(self.secretKey)
         
         
     @property
@@ -44,12 +44,12 @@ class Account(models.Model):
         return self.publicAddress
 
     @property
-    def getPrivateKey(self) -> str:
-        return self.privateKey
+    def getSecretKey(self) -> str:
+        return self.secretKey
     
     @property
     def getMnemonic(self) -> str:
-        return mnemonic.from_private_key(self.privateKey)
+        return mnemonic.from_private_key(self.secretKey)
 
     @classmethod
     def FromMnemonic(cls, m: str) -> "Account":

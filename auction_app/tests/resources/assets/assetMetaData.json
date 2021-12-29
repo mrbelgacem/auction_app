@@ -1,0 +1,25 @@
+{
+    "name": "OceanOI",
+    "description": "Ocean's Artwork Coins",
+    "image": "auction_app\/tests\/resources\/images\/animal_giraffe.png",
+    "image_integrity": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+    "properties": {
+        "simple_property": "Ocean's first artwork",
+        "rich_property": {
+            "name": "OceanCoi",
+            "value": "001",
+            "display_value": "001",
+            "class": "emphasis",
+            "css": {
+                "color": "#ffffff",
+                "font-weight": "bold",
+                "text-decoration": "underline"
+            }
+        },
+        "array_property": {
+            "name": "Artwork Coins",
+            "value": [1, 2, 3, 4],
+            "class": "emphasis"
+        }
+    }
+}
