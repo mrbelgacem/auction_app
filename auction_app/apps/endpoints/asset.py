@@ -1,7 +1,9 @@
 import json
 import hashlib
 import logging
-from algosdk import mnemonic
+import base64
+from datetime import datetime
+from algosdk import mnemonic, transaction, encoding
 from algosdk.v2client import algod
 from algosdk.future.transaction import AssetConfigTxn
 from algosdk.error import AlgodHTTPError
@@ -30,21 +32,30 @@ class assetEndPoint(View):
     # see https://github.com/algorand/py-algorand-sdk/issues/169
     # Change algod_token and algod_address to connect to a different client
 
-    # Algod parameter
-    algodAddress = getattr(settings, 'ALGOD_ADDRESS', None)
-    algodToken = getattr(settings, 'ALGOD_TOKEN', None)
+    # PureStake Algod parameter
+    algodAddress = getattr(settings, 'PURESTAKE_ENDPOINT_ADDR', None)
+    algodToken = getattr(settings, 'PURESTAKE_KEY', None)
+    algodHeader = getattr(settings, 'PURESTAKE_HEADER', None)
     
     try:
-      # Create an algod client (only for testing)
-      algodClient = Setup.getAlgodClient(ALGOD_TOKEN=algodToken, ALGOD_ADDRESS=algodAddress)
+      # Create the algod Client with a PureStake Key
+      algodClient = algod.AlgodClient(algodToken, algodAddress, headers=algodHeader)
     
       logger.info("Creating Asset...")
       # CREATE ASSET
       # Get network params for transactions before every transaction.
       params = algodClient.suggested_params()
+      
       # comment these two lines if you want to use suggested params
       # params.fee = 1000
       # params.flat_fee = True
+      genHash = params.gh
+      firstValidRound = params.first
+      # maximum validity of 1000 blocks (1000 blocks in the future)
+      lastValidRound = params.last
+      txFee = params.min_fee
+      
+      logger.info(f"Network params : {firstValidRound=}, {lastValidRound=}, {txFee=}")
     
       # JSON file
       f = open ('auction_app/tests/resources/assets/assetMetaData.json', "r")
@@ -76,7 +87,7 @@ class assetEndPoint(View):
           total=1000,
           default_frozen=False,
           unit_name="OceanOI",
-          asset_name="Ocean's Artwork Coins@arc3",
+          asset_name="Ocean's of " + str(datetime.now().strftime("%a %-d %b %y %-H:%M")),
           manager=accountPubAddr,
           reserve=accountPubAddr,
           freeze=accountPubAddr,
@@ -84,23 +95,37 @@ class assetEndPoint(View):
           url="https://path/to/my/asset/details", 
           metadata_hash=json_metadata_hash,
           decimals=0)
+       
+      #tx = transaction.PaymentTxn(sender, fee, first, last, gh, receiver, amt)
+      #signTx = tx.sign(private_key)
+      
+      # Transaction bytes string encoded in base64
+      #tx_b64 = encoding.msgpack_encode(txn)
+      
     
       # Sign with secret key of creator
+      logger.info("Send trx to signature ...")
       stxn = txn.sign(account['secretKey'])
+      #stxn = algodClient.send_transaction(txn, headers={'content-type': 'application/x-binary'})
     
       # Send the transaction to the network and retrieve the txid.
-      txid = algodClient.send_transaction(stxn)
-      logger.info(f"Asset Creation Transaction ID: {txid}")
+      logger.info("Send trx to network ...")
+      txid_b64 = algodClient.send_transaction(stxn, headers={'content-type': 'application/x-binary'})
+      
+      #txid = encoding.msgpack_decode(txid_b64)
+      
+      #logger.info(f"Transaction Signature : {txid_b64}")
+      logger.info(f"Asset Creation Transaction ID : {txid_b64}")
     
       # Wait for the transaction to be confirmed
-      TransactionUtil.wait_for_confirmation(algodClient,txid,4)
+      TransactionUtil.wait_for_confirmation(algodClient,txid_b64,4)
     
       try:
           # Pull account info for the creator
           # account_info = algod_client.account_info(accounts[1]['publicAddress'])
           # get asset_id from tx
           # Get the new asset's information from the creator account
-          ptx = algodClient.pending_transaction_info(txid)
+          ptx = algodClient.pending_transaction_info(txid_b64)
           asset_id = ptx["asset-index"]
           TransactionUtil.print_created_asset(algodClient, accountPubAddr, asset_id)
           TransactionUtil.print_asset_holding(algodClient, accountPubAddr, asset_id)

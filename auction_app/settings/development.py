@@ -149,6 +149,8 @@ KMD_WALLET_PASSWORD = ''
 
 # NOTSET = 0 / DEBUG = 10 / INFO = 20 / WARN or WARNING = 30 / ERROR = 40 / FATAL or CRITICAL = 50
 
+LOGGER_LEVEL = 'DEBUG'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -181,8 +183,20 @@ LOGGING = {
     'loggers': {
         'auction_app': {
             'handlers': ['console','file'],
-            'level': 'INFO',
+            'level': LOGGER_LEVEL,
             'propagate': True,
         },
     },
 }
+
+
+###================
+# PURESTAKE param
+###================
+PURESTAKE_KEY = '7Y0CnOcWxUa1Ew4H3x4YBITtsWZZ52C1f5s4Yzx2'
+PURESTAKE_ENDPOINT_ADDR = 'https://testnet-algorand.api.purestake.io/ps2'
+PURESTAKE_HEADER = {'X-Api-key': PURESTAKE_KEY}
+
+PURESTAKE_INDEXER_ADDR = 'https://testnet-algorand.api.purestake.io/idx2'
+
+
